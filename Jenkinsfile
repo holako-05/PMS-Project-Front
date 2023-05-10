@@ -43,16 +43,15 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    dir('dist') {
-                        withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                            sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
-                            sh 'docker build -t mouradtals/pms-frontend:latest .'
-                            sh 'docker push mouradtals/pms-frontend:latest'
-                        }
+                    withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+                        sh 'docker build -t mouradtals/pms-frontend:latest .'
+                        sh 'docker push mouradtals/pms-frontend:latest'
                     }
                 }
             }
         }
+
 
         stage('Deploy using Docker Compose') {
             steps {
