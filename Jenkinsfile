@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool 'SonarQube'; 
-                    dir('frontend') {
+                    dir('dist') {
                         withSonarQubeEnv('SonarServer') {
                             sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=pms_front -Dsonar.projectName='pms_front'"
                         }
@@ -43,7 +43,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    dir('frontend') {
+                    dir('dist') {
                         withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                             sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
                             sh 'docker build -t mouradtals/pms-frontend:latest .'
