@@ -6,12 +6,18 @@ pipeline {
     }
 
     stages {
+        stage('Cleanup workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+
         stage('Pull code from repository') {
             steps {
                 checkout scm
             }
         }
-        
+
         stage('Build project') {
             steps {
                 sh 'npm ci'
