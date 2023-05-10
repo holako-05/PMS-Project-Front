@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'NodeJS'
+    }
+
     stages {
         stage('Pull code from repository') {
             steps {
@@ -14,6 +18,25 @@ pipeline {
                     sh 'npm ci'
                     sh 'npm run build'
                 }
+            }
+        }
+
+        stage('SonarQube analysis') {
+            steps {
+                script {
+                    def scannerHome = tool 'SonarQube'; 
+                    dir('frontend') {
+                        withSonarQubeEnv('SonarServer') {
+                            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=pms_front -Dsonar.projectName='pms_front'"
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Wait for SonarQube analysis to complete') {
+            steps {
+                waitForQualityGate abortPipeline: true
             }
         }
 
