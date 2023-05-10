@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  pms-frontend:
+    image: mouradtals/pms-frontend:latest
+    container_name: pms-frontend
+    ports:
+      - "80:80"
+    restart: always
