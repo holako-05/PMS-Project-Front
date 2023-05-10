@@ -2,7 +2,7 @@ import axios from 'axios';
 import router from "@/router";
 import authHeader from "@/services/authHeader";
 
-const base_url = "http://localhost:10000/product/";
+const base_url = "http://185.185.82.26:10000/product/";
 
 
 class ProductService{
