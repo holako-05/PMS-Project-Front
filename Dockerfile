@@ -23,4 +23,4 @@ FROM nginx:1.21-alpine
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 # Copy the Nginx configuration file
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.config /etc/nginx/conf.d/default.conf

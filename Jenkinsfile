@@ -11,15 +11,14 @@ pipeline {
                 checkout scm
             }
         }
-
+        
         stage('Build project') {
             steps {
-                dir('frontend') {
-                    sh 'npm ci'
-                    sh 'npm run build'
-                }
+                sh 'npm ci'
+                sh 'npm run build'
             }
         }
+
 
         stage('SonarQube analysis') {
             steps {
